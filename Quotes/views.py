@@ -8,3 +8,6 @@ class QuotesFeed(DataMixin, ListView):
     template_name = 'quotes/quotes.html'
     title_page = 'Цитаты'
     context_object_name = "quotes"
+
+
+

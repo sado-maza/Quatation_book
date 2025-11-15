@@ -4,9 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ title_page }}</title>
+    <link type="text/css" href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
 <body>
-<p>это база</p>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+
+        <a href="#" class="logo-link">Цитатник</a>
+      </div>
+
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Цитаты</a></li>
+          <li><a href="quotes.html">Авторы</a></li>
+          <li><a href="Jeison.html">Добавить цитату</a></li>
+          
+         
+
+        </ul>
+      </nav>
+
+      <div class="header-contacts">
+
+        <p>Вход|Регестрация</p>
+      </div>
+    </div>
+  </header>
+
 {% block content%} {% endblock %}
 </body>
 </html>

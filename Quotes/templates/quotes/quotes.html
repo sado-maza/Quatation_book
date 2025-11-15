@@ -1,6 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
 
-<p>согл</p>
 
+ 
+    <section class="hero">
+         {% for quote in quotes %}
+        <div class="container slider">
+          <div class="slides">
+
+          <div class="slide">
+              <div class="slide-text">
+              <h2>{{quote.title}}</h2>
+              <p>{{ quote.content }}</p>
+            </div>
+          <div class="corner-label">
+            <div class="corner-title">{{ quote.creator_content }}</div>
+            <div class="corner-subtitle">{{ quote.category }}</div>
+          </div>
+          </div>
+
+        </div>
+      </div>
+        {% endfor %}
+    </section>
+
+<script src="{% static 'js/button.js' %}"></script>
 {% endblock %}
