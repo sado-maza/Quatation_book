@@ -1,5 +1,8 @@
 main = [
-    {'title': 'Главная страница', 'url_name': 'feed'},
+    {'title': 'Авторы', 'url_name': 'authors'},
+    {'title': 'Добавить Цитату', 'url_name': 'addQuote'},
+
+
 ]
 
 class DataMixin:

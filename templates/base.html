@@ -12,23 +12,24 @@
     <div class="container header-inner">
       <div class="logo">
 
-        <a href="#" class="logo-link">Цитатник</a>
+        <a href="{% url 'feed' %}" class="logo-link">Цитатник</a>
       </div>
 
       <nav class="main-nav">
         <ul>
-          <li><a href="index.html">Цитаты</a></li>
-          <li><a href="quotes.html">Авторы</a></li>
-          <li><a href="Jeison.html">Добавить цитату</a></li>
-          
-         
-
+          {% for comp in menu%}
+        <li><a href="{% url comp.url_name %}">{{ comp.title }}</a></li>
+        {% endfor %}
         </ul>
       </nav>
 
       <div class="header-contacts">
 
-        <p>Вход|Регестрация</p>
+        {% if user.is_authenticated %}
+        <p class="last"> <a href="{% url 'Users:profile' %}">{{user.username}}</a> | <a href="{% url 'Users:logout' %}">Выйти</a></p>
+        {% else %}
+        <p class="last"><a href="{% url 'Users:login' %}">Войти</a> | <a href="{% url 'Users:register' %}">Регистрация</a></p>
+{% endif %}
       </div>
     </div>
   </header>

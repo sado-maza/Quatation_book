@@ -8,7 +8,6 @@ class Quotes(models.Model):
     creator_content=models.ForeignKey(User, on_delete=models.CASCADE, related_name='author',default='null')
     title = models.CharField(max_length=100,verbose_name="title")
     content = models.TextField(blank=True, verbose_name="quote")
-    creator_coment = models.TextField(default=None, blank=True , verbose_name="Comment")
     time_created = models.DateTimeField(auto_now_add=True)
     time_updated = models.DateTimeField(auto_now=True)
     category = models.ForeignKey('Category', on_delete=models.PROTECT)
