@@ -1,33 +1,29 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, AuthenticationForm
 from django.shortcuts import render
 
 import Users
 
 
-class LoginForm(forms.Form):
-#   username = forms.CharField(label='Login' ,widget=forms.TextInput())
- #   password = forms.CharField(label='Password', widget=forms.PasswordInput())
-
-    class Meta:
-        model = get_user_model()
-        fields = ['username', 'password']
+class EmailAuthenticationForm(AuthenticationForm):
+    username = forms.EmailField(
+        label="Email",
+        widget=forms.EmailInput(attrs={"autofocus": True})
+    )
 
 
 class RegisterUserForm(UserCreationForm):
-    username = forms.CharField(label="Логин")
+    username = forms.CharField(label="Имя")
     password1 = forms.CharField(label="Пароль", widget=forms.PasswordInput)
     password2 = forms.CharField(label="Повтор пароля", widget=forms.PasswordInput)
 
     class Meta:
         model = get_user_model()
-        fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2']
         labels = {
             'email': 'E-mail',
-            'first_name': 'Имя',
-            'last_name': 'Фамилия',
-        }
+           }
 
     def clean_email(self):
         email = self.cleaned_data['email']
@@ -37,20 +33,16 @@ class RegisterUserForm(UserCreationForm):
 
 
 class ProfileUserForm(forms.ModelForm):
-    username = forms.CharField(disabled=True, label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
+    username = forms.TextInput()
     email = forms.CharField(disabled=True, label='E-mail', widget=forms.TextInput(attrs={'class': 'form-input'}))
 
     class Meta:
         model = get_user_model()
-        fields = ['username', 'email', 'first_name', 'last_name']
+        fields = ['username', 'email']
         labels = {
-            'first_name': 'Имя',
-            'last_name': 'Фамилия',
+            'username': "Логин"
         }
-        widgets = {
-            'first_name': forms.TextInput(),
-            'last_name': forms.TextInput(),
-        }
+
 
 
 class UserPasswordChangeForm(PasswordChangeForm):

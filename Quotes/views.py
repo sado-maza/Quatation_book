@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
@@ -15,11 +16,13 @@ class QuotesFeed(DataMixin, ListView):
     title_page = 'Цитаты'
     context_object_name = "quotes"
 
-class Authors(DataMixin, ListView):
+
+class Authors(DataMixin,LoginRequiredMixin, ListView):
     model = User
     template_name = 'quotes/authors.html'
     context_object_name = "authors"
     title_page = "Авторы"
+
 
 
 class AddQuote(LoginRequiredMixin, DataMixin, CreateView):
