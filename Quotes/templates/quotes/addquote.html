@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-{% load static %}
+<div class="quote-form-container">
+    <h2>Создать новую цитату</h2>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-error">{{ form.non_field_errors }}</div>
 
+        {% for f in form %}
+            <p>
+                <label for="{{ f.id_for_label }}">{{ f.label }}:</label>
+                {{ f }}
+            </p>
+            <div class="form-error">{{ f.errors }}</div>
+        {% endfor %}
 
-
-<title>{{ title }}</title>
-<form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="form-error">{{ form.non_field_errors }}</div>
-    {% for f in form%}
-        <p><label for="{{ f.id_for_label }}">{{f.label}}: </label>{{f}}</p>
-        <div>{{ f.errors }}</div>
-    {%endfor%}
-    <p><button type="submit">Отправить</button></p>
-
-</form>
-
-
+        <p><button type="submit">Отправить</button></p>
+    </form>
+</div>
 {% endblock %}

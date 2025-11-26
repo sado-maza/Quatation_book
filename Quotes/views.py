@@ -17,12 +17,11 @@ class QuotesFeed(DataMixin, ListView):
     context_object_name = "quotes"
 
 
-class Authors(DataMixin,LoginRequiredMixin, ListView):
+class Authors(DataMixin, LoginRequiredMixin, ListView):
     model = User
     template_name = 'quotes/authors.html'
     context_object_name = "authors"
     title_page = "Авторы"
-
 
 
 class AddQuote(LoginRequiredMixin, DataMixin, CreateView):

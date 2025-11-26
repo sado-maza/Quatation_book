@@ -24,7 +24,7 @@ a {
   position: sticky;
   top: 0;
   z-index: 40;
-  margin: auto auto 20px auto;
+  margin: auto auto 1px auto;
 }
 .header-inner {
   display: flex;
@@ -35,7 +35,7 @@ a {
 }
 .logo-link {
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 1.75rem;
   color: gray;
 }
 .main-nav {
@@ -50,8 +50,9 @@ a {
   align-items: auto;
 }
 .main-nav a {
-  padding: 6px 2px;
+  padding: 6px 4px;
   color: #4b5563;
+  font-size: 1.13rem;
 }
 .dropdown {
   position: absolute;
@@ -86,7 +87,7 @@ a {
   border-color: #0b5ed7;
 }
 .hero {
-  padding: 30px 0;
+  padding: 20px 0;
 }
 .slider {
   position: relative;
@@ -119,6 +120,7 @@ a {
   font-size: 1.5rem;
 }
 .slide-text p {
+  font-size: 1.20rem;
   margin: 0;
   color: #6b7280;
 }
@@ -144,7 +146,7 @@ a {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    font-size: 14px;
+    font-size: 18px;
     color: #444444;
     opacity: 0.9;
     line-height: 1.2;
@@ -153,6 +155,172 @@ a {
     font-weight: 600;
 }
 .corner-subtitle {
-    font-size: 16px;
+    font-size: 18px;
     opacity: 1;
+}
+
+
+
+
+
+
+
+
+
+.authors-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #374151;
+    text-align: center;
+}
+
+.authors-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.author-card {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    background: #fff;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    gap: 20px;
+}
+
+.author-left {
+    flex-shrink: 0;
+}
+
+.author-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;      /* обрезает лишнее */
+    aspect-ratio: 1 / 1;    /* гарантирует квадрат */
+    border: 2px solid #e5e7eb;
+}
+
+.author-center {
+    flex-grow: 1;
+}
+
+.author-name {
+    margin: 0 0 6px 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.author-description {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+.author-right {
+    text-align: right;
+    min-width: 140px;
+}
+
+
+.author-likes {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #9ca3af;
+}
+
+
+.author-link {
+    font-size: 0.95rem;
+    color: gray;
+}
+
+.author-link:hover {
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+.quote-form-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: #fff;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 30px 40px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.quote-form-container h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #111827;
+    text-align: center;
+}
+
+.quote-form-container form p {
+    margin-bottom: 18px;
+    font-size: 1rem;
+    color: #374151;
+}
+
+.quote-form-container label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.quote-form-container input,
+.quote-form-container textarea,
+.quote-form-container select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-top: 4px;
+    box-sizing: border-box;
+}
+
+.quote-form-container textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.quote-form-container button {
+    background: gray;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quote-form-container button:hover {
+    background: #d1d5db; /* светло-серый при наведении */
+    color: #4b5563;       /* текст станет темнее для контраста */
+    border: none;         /* убрали рамку */
+}
+
+}
+
+.form-error {
+    color: #dc2626;
+    font-weight: 600;
+    margin-bottom: 12px;
 }
