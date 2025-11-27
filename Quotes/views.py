@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 
 import Users
 from .forms import AddQuoteForm
+from .summing_likes import sumLike
 from .utils import DataMixin
 from .models import Quotes
 
@@ -15,6 +16,7 @@ class QuotesFeed(DataMixin, ListView):
     template_name = 'quotes/quotes.html'
     title_page = 'Цитаты'
     context_object_name = "quotes"
+
 
 
 class Authors(DataMixin, LoginRequiredMixin, ListView):

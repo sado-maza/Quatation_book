@@ -14,7 +14,7 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 
 class PopularAdmin(admin.ModelAdmin):
-    list_display = ('id', 'quotes','number_of_likes','number_of_dislikes','number_of_views')
+    list_display = ('id', 'quotes','number_of_likes','number_of_dislikes',)
     list_display_links = ('id', 'quotes')
 
 admin.site.register(Popular, PopularAdmin)

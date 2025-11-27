@@ -15,6 +15,12 @@ class Quotes(models.Model):
     def __str__( self ):
         return self.title
 
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        super().save(*args, **kwargs)
+        if is_new:
+            Popular.objects.create(quotes=self)
+
 
 class Category(models.Model):
     name = models.CharField(db_index=True)
@@ -28,6 +34,6 @@ class Popular(models.Model):
     quotes=OneToOneField(Quotes,on_delete=models.CASCADE)
     number_of_likes = models.IntegerField(default=0)
     number_of_dislikes = models.IntegerField(default=0)
-    number_of_views = models.IntegerField(default=0)
+
 
 
