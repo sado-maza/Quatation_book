@@ -1,11 +1,10 @@
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import OneToOneField
 
 
 class Quotes(models.Model):
-    creator_content=models.ForeignKey(User, on_delete=models.CASCADE, related_name='author',default='null')
+    creator_content=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='author')
     title = models.CharField(max_length=100,verbose_name="title")
     content = models.TextField(blank=True, verbose_name="quote")
     time_created = models.DateTimeField(auto_now_add=True)

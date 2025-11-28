@@ -1,4 +1,6 @@
-from .models import Quotes,Popular,User
+from django.contrib.auth import get_user_model
+
+from .models import Quotes,Popular
 from django.db.models import Sum
 
 def sumLike(username):
@@ -7,4 +9,4 @@ def sumLike(username):
     return total_like
 
 
-print(sumLike(User.objects.get(pk=1)))
+# print(sumLike(get_user_model().objects.get(pk=1)))

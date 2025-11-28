@@ -12,9 +12,15 @@
                 <div class="author-card">
 
                     <div class="author-left">
-                        <img src="{% static 'img/avatar_placeholder.png' %}"
-                             class="author-avatar"
-                             alt="avatar">
+                        {% if user.img %}
+                            <img src="{{ user.img.url }}"
+                                 class="author-avatar"
+                                 alt="avatar">
+                        {% else %}
+                            <img src="{{ default_img }}"
+                                 class="author-avatar"
+                                 alt="avatar">
+                        {% endif %}
                     </div>
 
                     <div class="author-center">

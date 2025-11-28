@@ -135,3 +135,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'Users.authentication.EmailAuthBackend',
 ]
+
+AUTH_USER_MODEL = 'Users.User'
+
+DEFAULT_USER_IMAGE = 'media/img/defolt_img.png'

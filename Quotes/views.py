@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -5,6 +6,7 @@ from django.views.generic import ListView, CreateView
 from django.contrib.auth.models import User
 
 import Users
+from Quatation_book import settings
 from .forms import AddQuoteForm
 from .summing_likes import sumLike
 from .utils import DataMixin
@@ -20,10 +22,13 @@ class QuotesFeed(DataMixin, ListView):
 
 
 class Authors(DataMixin, LoginRequiredMixin, ListView):
-    model = User
+    model = get_user_model()
     template_name = 'quotes/authors.html'
     context_object_name = "authors"
     title_page = "Авторы"
+    extra_context = {
+        'default_img': settings.DEFAULT_USER_IMAGE,
+    }
 
 
 class AddQuote(LoginRequiredMixin, DataMixin, CreateView):
