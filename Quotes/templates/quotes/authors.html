@@ -12,20 +12,14 @@
                 <div class="author-card">
 
                     <div class="author-left">
-                        {% if user.img %}
-                            <img src="{{ user.img.url }}"
+                        <img src="{{ auth.img.url }}"
                                  class="author-avatar"
                                  alt="avatar">
-                        {% else %}
-                            <img src="{{ default_img }}"
-                                 class="author-avatar"
-                                 alt="avatar">
-                        {% endif %}
                     </div>
 
                     <div class="author-center">
                         <h3 class="author-name">{{ auth.username }}</h3>
-                        <p class="author-description">Описание автора будет здесь…</p>
+                        <p class="author-description">{{ auth.description }}</p>
                     </div>
 
                     <div class="author-right">

@@ -21,8 +21,8 @@ class LoginUser(LoginView):
 
 
 def logout_user(request):
-    logout(request)  # очищает сессию
-    return redirect('/')  # перенаправляем на главную
+    logout(request)
+    return redirect('/')
 
 
 class RegisterUser(DataMixin, CreateView):
@@ -43,6 +43,7 @@ class ProfileUser(DataMixin, LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
 
 
 class UserPasswordChange(DataMixin, PasswordChangeView):

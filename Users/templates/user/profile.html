@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <title>Профиль</title>
-<form method="POST" >
+<form method="POST" enctype="multipart/form-data" >
     {% csrf_token %}
     <div class="form-error">{{ form.non_field_errors }}</div>
     {% for f in form%}

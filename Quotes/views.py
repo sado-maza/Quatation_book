@@ -1,16 +1,18 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
-from django.contrib.auth.models import User
+
 
 import Users
 from Quatation_book import settings
 from .forms import AddQuoteForm
-from .sum_like_dislike import sumLike, sumDisLike
+from .sum_like_dislike import sumLike
 from .utils import DataMixin
-from .models import Quotes
+from .models import Quotes, Like
 
 
 class QuotesFeed(DataMixin, ListView):
@@ -31,7 +33,6 @@ class Authors(DataMixin, LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         sumLike()
-        sumDisLike()
         context['default_img'] = settings.DEFAULT_USER_IMAGE
         return self.get_mixin_content(context)
 
@@ -48,3 +49,27 @@ class AddQuote(LoginRequiredMixin, DataMixin, CreateView):
         form.instance.creator_content = self.request.user
 
         return super().form_valid(form)
+
+
+@login_required
+def toggle_vote_ajax(request, quote_id, action):
+
+    if request.method == "POST":
+        quote = get_object_or_404(Quotes, id=quote_id)
+        try:
+            like = Like.objects.get(user=request.user, quote=quote)
+            if like.type == action:
+                like.delete()
+            else:
+                like.type = action
+                like.save()
+        except Like.DoesNotExist:
+            Like.objects.create(user=request.user, quote=quote, type=action)
+
+        data = {
+            "likes": quote.number_of_likes,
+            "dislikes": quote.number_of_dislikes,
+        }
+        return JsonResponse(data)
+
+    return JsonResponse({"error": "Invalid request"}, status=400)

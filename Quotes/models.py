@@ -21,6 +21,14 @@ class Quotes(models.Model):
         if is_new:
             Popular.objects.create(quotes=self)
 
+    @property
+    def number_of_likes(self):
+        return self.likes.filter(type='like').count()
+
+    @property
+    def number_of_dislikes(self):
+        return self.likes.filter(type='dislike').count()
+
 
 class Category(models.Model):
     name = models.CharField(db_index=True)
@@ -37,3 +45,16 @@ class Popular(models.Model):
 
 
 
+
+class Like(models.Model):
+    LIKE_CHOICES = (
+        ('like', 'Like'),
+        ('dislike', 'Dislike'),
+    )
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    quote = models.ForeignKey('Quotes', related_name='likes', on_delete=models.CASCADE)
+    type = models.CharField(max_length=7, choices=LIKE_CHOICES,default='like')
+
+    class Meta:
+        unique_together = ('user', 'quote')  # один пользователь = одна реакция

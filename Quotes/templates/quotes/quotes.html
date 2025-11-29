@@ -13,10 +13,11 @@
                     <p>{{ quote.content }}</p>
                 </div>
 
-                {% if quote.popular %}
-                <div class="quote-likes">
-                    👍 {{ quote.popular.number_of_likes }} | 👎 {{ quote.popular.number_of_dislikes }}
-                </div>
+                {% if user.is_authenticated %}
+                    <div class="quote-likes" id="quote-{{ quote.id }}">
+                        <button onclick="toggleVote({{ quote.id }}, 'like')">👍 <span id="likes-{{ quote.id }}">{{ quote.number_of_likes }}</span></button>
+                        <button onclick="toggleVote({{ quote.id }}, 'dislike')">👎 <span id="dislikes-{{ quote.id }}">{{ quote.number_of_dislikes }}</span></button>
+                    </div>
                 {% endif %}
 
                 <div class="corner-label">

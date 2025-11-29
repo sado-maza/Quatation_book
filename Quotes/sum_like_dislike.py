@@ -1,14 +1,14 @@
 from django.contrib.auth import get_user_model
+from .models import Like
 
-from .models import Quotes,Popular
-from django.db.models import Sum
 
 model = get_user_model()
 
 def countLike(username):
-    quotes = Quotes.objects.filter(creator_content=username)
-    total_like = Popular.objects.filter(quotes__in=quotes).aggregate(total=Sum('number_of_likes'))['total'] or 0
-    return total_like
+    return Like.objects.filter(
+        quote__creator_content=username,
+        type='like'
+    ).count()
 
 def sumLike():
     for x in model.objects.all():
@@ -16,12 +16,3 @@ def sumLike():
         x.save()
 
 
-def countDisLike(username):
-    quotes = Quotes.objects.filter(creator_content=username)
-    total_like = Popular.objects.filter(quotes__in=quotes).aggregate(total=Sum('number_of_dislikes'))['total'] or 0
-    return total_like
-
-def sumDisLike():
-    for x in model.objects.all():
-        x.sum_of_dislikes = countLike(x)
-        x.save()
