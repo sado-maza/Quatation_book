@@ -4,7 +4,8 @@ from django.db.models import OneToOneField
 
 
 class Quotes(models.Model):
-    creator_content=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='author')
+    creator_content=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='author'
+                                      )
     title = models.CharField(max_length=100,verbose_name="title")
     content = models.TextField(blank=True, verbose_name="quote")
     time_created = models.DateTimeField(auto_now_add=True)

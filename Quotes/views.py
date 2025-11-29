@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 import Users
 from Quatation_book import settings
 from .forms import AddQuoteForm
-from .summing_likes import sumLike
+from .sum_like_dislike import sumLike, sumDisLike
 from .utils import DataMixin
 from .models import Quotes
 
@@ -26,9 +26,16 @@ class Authors(DataMixin, LoginRequiredMixin, ListView):
     template_name = 'quotes/authors.html'
     context_object_name = "authors"
     title_page = "Авторы"
-    extra_context = {
-        'default_img': settings.DEFAULT_USER_IMAGE,
-    }
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        sumLike()
+        sumDisLike()
+        context['default_img'] = settings.DEFAULT_USER_IMAGE
+        return self.get_mixin_content(context)
+
+
 
 
 class AddQuote(LoginRequiredMixin, DataMixin, CreateView):
