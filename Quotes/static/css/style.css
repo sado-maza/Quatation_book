@@ -367,3 +367,27 @@ a {
 .like-btn:hover, .dislike-btn:hover {
     border-color: #64748b;
 }
+
+
+.quote-likes {
+    display: flex;
+    gap: 10px;
+    margin-top: 0px;
+    margin-left: 0px;
+
+}
+
+.quote-likes button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.quote-likes img {
+    width: 24px;
+    height: 24px;
+    transition: 0.2s;
+}

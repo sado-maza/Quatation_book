@@ -2,7 +2,6 @@
 {% block content %}
 {% load static %}
 
-
 <section class="hero">
     {% for quote in quotes %}
     <div class="container slider">
@@ -14,10 +13,25 @@
                 </div>
 
                 {% if user.is_authenticated %}
-                    <div class="quote-likes" id="quote-{{ quote.id }}">
-                        <button onclick="toggleVote({{ quote.id }}, 'like')">👍 <span id="likes-{{ quote.id }}">{{ quote.number_of_likes }}</span></button>
-                        <button onclick="toggleVote({{ quote.id }}, 'dislike')">👎 <span id="dislikes-{{ quote.id }}">{{ quote.number_of_dislikes }}</span></button>
-                    </div>
+                <div class="quote-likes" id="quote-{{ quote.id }}">
+                    <button class="like-btn" onclick="toggleVote({{ quote.id }}, 'like')">
+                        {% if quote.user_vote == 'like' %}
+                            <img id="like-img-{{ quote.id }}" src="{% static 'img/likeActive.png' %}" alt="like">
+                        {% else %}
+                            <img id="like-img-{{ quote.id }}" src="{% static 'img/like.png' %}" alt="like">
+                        {% endif %}
+                        <span id="likes-{{ quote.id }}">{{ quote.number_of_likes }}</span>
+                    </button>
+
+                    <button class="dislike-btn" onclick="toggleVote({{ quote.id }}, 'dislike')">
+                        {% if quote.user_vote == 'dislike' %}
+                            <img id="dislike-img-{{ quote.id }}" src="{% static 'img/dislikeActive.png' %}" alt="dislike">
+                        {% else %}
+                            <img id="dislike-img-{{ quote.id }}" src="{% static 'img/dislike.png' %}" alt="dislike">
+                        {% endif %}
+                        <span id="dislikes-{{ quote.id }}">{{ quote.number_of_dislikes }}</span>
+                    </button>
+                </div>
                 {% endif %}
 
                 <div class="corner-label">
@@ -29,6 +43,5 @@
     </div>
     {% endfor %}
 </section>
-
 
 {% endblock %}

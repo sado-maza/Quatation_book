@@ -1,4 +1,3 @@
-// Получаем CSRF токен из cookie
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -16,7 +15,33 @@ function getCookie(name) {
 
 const csrftoken = getCookie('csrftoken');
 
-// Функция toggle лайка/дизлайка
+// --- ФУНКЦИЯ ОБНОВЛЕНИЯ ИКОНКИ ---
+function updateIcons(quoteId, action, data) {
+
+    // data.state = "like" | "dislike" | "none"
+    // Предполагается, что сервер возвращает текущее состояние пользователя
+    // Если нужно — подгоню под твой ответ
+
+    const likeImg = document.getElementById(`like-img-${quoteId}`);
+    const dislikeImg = document.getElementById(`dislike-img-${quoteId}`);
+
+    if (data.state === "like") {
+        likeImg.src = "/static/img/likeActive.png";
+        dislikeImg.src = "/static/img/dislike.png";
+    }
+    else if (data.state === "dislike") {
+        likeImg.src = "/static/img/like.png";
+        dislikeImg.src = "/static/img/dislikeActive.png";
+    }
+    else {
+        // ничего не активно
+        likeImg.src = "/static/img/like.png";
+        dislikeImg.src = "/static/img/dislike.png";
+    }
+}
+
+
+// --- ОСНОВНАЯ ФУНКЦИЯ toggle ---
 window.toggleVote = function(quoteId, action) {
     fetch(`/quote/${quoteId}/${action}/toggle/`, {
         method: 'POST',
@@ -32,9 +57,13 @@ window.toggleVote = function(quoteId, action) {
         return response.json();
     })
     .then(data => {
-        // Обновляем счетчики на странице
+
         document.getElementById(`likes-${quoteId}`).textContent = data.likes;
         document.getElementById(`dislikes-${quoteId}`).textContent = data.dislikes;
+
+        // Обновить иконки
+        updateIcons(quoteId, action, data);
+
     })
     .catch(error => {
         console.error('Ошибка:', error);

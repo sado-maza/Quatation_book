@@ -21,6 +21,22 @@ class QuotesFeed(DataMixin, ListView):
     title_page = 'Цитаты'
     context_object_name = "quotes"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+
+        # Добавляем поле user_vote к каждому quote
+        for quote in context['quotes']:
+            if user.is_authenticated:
+                try:
+                    like = quote.likes.get(user=user)
+                    quote.user_vote = like.type  # 'like' или 'dislike'
+                except quote.likes.model.DoesNotExist:
+                    quote.user_vote = 'none'
+            else:
+                quote.user_vote = 'none'
+
+        return context
 
 
 class Authors(DataMixin, LoginRequiredMixin, ListView):
@@ -56,19 +72,25 @@ def toggle_vote_ajax(request, quote_id, action):
 
     if request.method == "POST":
         quote = get_object_or_404(Quotes, id=quote_id)
+
         try:
             like = Like.objects.get(user=request.user, quote=quote)
             if like.type == action:
+                # снимаем голос
                 like.delete()
+                user_state = "none"
             else:
                 like.type = action
                 like.save()
+                user_state = action
         except Like.DoesNotExist:
             Like.objects.create(user=request.user, quote=quote, type=action)
+            user_state = action
 
         data = {
             "likes": quote.number_of_likes,
             "dislikes": quote.number_of_dislikes,
+            "state": user_state
         }
         return JsonResponse(data)
 
