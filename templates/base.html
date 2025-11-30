@@ -8,33 +8,59 @@
 </head>
 <body>
 
-  <header class="site-header">
+    <header class="site-header">
     <div class="container header-inner">
       <div class="logo">
-
         <a href="{% url 'feed' %}" class="logo-link">Цитатник</a>
       </div>
 
       <nav class="main-nav">
         <ul>
-          {% for comp in menu%}
-        <li><a href="{% url comp.url_name %}">{{ comp.title }}</a></li>
-        {% endfor %}
+          {% for comp in menu %}
+          <li><a href="{% url comp.url_name %}">{{ comp.title }}</a></li>
+          {% endfor %}
         </ul>
       </nav>
 
       <div class="header-contacts">
-
         {% if user.is_authenticated %}
         <p class="last"> <a href="{% url 'Users:profile' %}">{{user.username}}</a> | <a href="{% url 'Users:logout' %}">Выйти</a></p>
         {% else %}
         <p class="last"><a href="{% url 'Users:login' %}">Войти</a> | <a href="{% url 'Users:register' %}">Регистрация</a></p>
-{% endif %}
+        {% endif %}
       </div>
     </div>
   </header>
 
-{% block content%} {% endblock %}
+
+  <div class="main-content-wrapper container">
+    <aside class="sidebar">
+      <h3>Категории</h3>
+        <ul>
+            <li><a href="/">Все</a></li>
+        {% for x in cat %}
+            <li><a href="/cats/{{x.slug}}">{{x.name}}</a></li>
+
+        {% endfor %}
+        </ul>
+    </aside>
+
+    <main class="main-content">
+      {% block content %} {% endblock %}
+    </main>
+  </div>
+
+  <!-- Подвал -->
+  <footer class="site-footer">
+    <p>&copy; {{ current_year }} Цитатник. Все права защищены.</p>
+    <p>
+      <a href="#">Политика конфиденциальности</a> |
+      <a href="#">Условия использования</a> |
+      <a href="#">Контакты</a>
+    </p>
+  </footer>
+
+
   <script src="{% static 'js/likeButton.js' %}"></script>
 </body>
 </html>

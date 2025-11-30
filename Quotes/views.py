@@ -1,18 +1,17 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count, Q
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
 
-
-import Users
 from Quatation_book import settings
 from .forms import AddQuoteForm
 from .sum_like_dislike import sumLike
-from .utils import DataMixin
-from .models import Quotes, Like
+from .utils import DataMixin, QuotesContextService
+from .models import Quotes, Like, Category
 
 
 class QuotesFeed(DataMixin, ListView):
@@ -23,21 +22,30 @@ class QuotesFeed(DataMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = self.request.user
+        service = QuotesContextService(user=self.request.user)
+        # передаём extra_context через DataMixin
+        return self.get_mixin_content(
+            service.get_context(self.object_list, extra_context={
+                'title_page': self.title_page,
 
-        # Добавляем поле user_vote к каждому quote
-        for quote in context['quotes']:
-            if user.is_authenticated:
-                try:
-                    like = quote.likes.get(user=user)
-                    quote.user_vote = like.type  # 'like' или 'dislike'
-                except quote.likes.model.DoesNotExist:
-                    quote.user_vote = 'none'
-            else:
-                quote.user_vote = 'none'
+            })
+        )
 
-        return context
+    def get_queryset(self):
+        qs = super().get_queryset()
 
+        sort = self.request.GET.get('sort')
+
+        if sort == 'new':
+            qs = qs.order_by('-time_created')  # новые сверху
+        elif sort == 'old':
+            qs = qs.order_by('time_created')  # старые сверху
+        elif sort == 'likes':
+            from django.db.models import Q
+            qs = qs.annotate(
+                like_count=Count('likes', filter=Q(likes__type='like'))
+            ).order_by('-like_count')
+        return qs
 
 class Authors(DataMixin, LoginRequiredMixin, ListView):
     model = get_user_model()
@@ -69,7 +77,6 @@ class AddQuote(LoginRequiredMixin, DataMixin, CreateView):
 
 @login_required
 def toggle_vote_ajax(request, quote_id, action):
-
     if request.method == "POST":
         quote = get_object_or_404(Quotes, id=quote_id)
 
@@ -95,3 +102,21 @@ def toggle_vote_ajax(request, quote_id, action):
         return JsonResponse(data)
 
     return JsonResponse({"error": "Invalid request"}, status=400)
+
+
+@login_required
+def categors(request, cat):
+    mixin = DataMixin()
+    slug = Category.objects.get(slug=cat).pk
+    qs = Quotes.objects.filter(category_id=slug)
+    sort = request.GET.get('sort')
+    if sort == 'new':
+        qs = qs.order_by('-time_created')
+    elif sort == 'old':
+        qs = qs.order_by('time_created')
+    elif sort == 'likes':
+        qs = qs.annotate(like_count=Count('likes', filter=Q(likes__type='like'))).order_by('-like_count')
+    service = QuotesContextService(user=request.user)
+    context = service.get_context(qs, extra_context={'title_page': f'Категория {cat}'})
+    context = mixin.get_mixin_content(context)
+    return render(request, 'quotes/quotes.html', context)

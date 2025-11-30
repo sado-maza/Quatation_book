@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
 }
+
 html,
 body {
   margin: 0;
@@ -9,23 +10,108 @@ body {
   color: #111827;
   background: #f8fafc;
 }
+
 a {
   color: inherit;
   text-decoration: none;
 }
+
+/* Контейнер без ограничения ширины */
 .container {
-  width: 1200px;
-  max-width: calc(100% - 40px);
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
+  padding: 0 20px; /* отступы слева и справа */
 }
+
+/* Контент с боковой панелью */
+.main-content-wrapper {
+  display: flex;
+  min-height: calc(100vh - 80px); /* 100% высоты минус шапка */
+   margin: 0;      /* убрать отступы */
+  padding: 0;
+}
+
+/* Боковая панель */
+.sidebar {
+  width: 220px; /* ширина панели */
+  min-height: calc(100vh - 80px);
+  background: #f3f4f6; /* светло-серый фон */
+  border: 2px solid #e5e7eb;
+  border-radius: 3px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 80px;  /* высота шапки */
+  z-index: 40;
+
+  align-self: flex-start; /* чтобы корректно работало в flex-контейнере */
+}
+
+/* Заголовок панели */
+.sidebar h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Список категорий */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin-bottom: 10px;
+}
+
+.sidebar a {
+  color: #4b5563;
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  text-decoration: underline;
+}
+
+/* Основной контент */
+.main-content {
+  flex: 1;
+  background: #f8fafc;
+  padding: 20px;
+}
+
+/* Подвал */
+.site-footer {
+  background: #111827;
+  color: #fff;
+  padding: 25px 20px;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.site-footer a {
+  color: #9ca3af;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Шапка сайта */
 .site-header {
   background: #fff;
   border-bottom: 1px solid #e5e7eb;
   position: sticky;
   top: 0;
   z-index: 40;
-  margin: auto auto 1px auto;
+  padding: 0px 20px;
+
 }
+
 .header-inner {
   display: flex;
   align-items: center;
@@ -33,14 +119,17 @@ a {
   padding: 14px 0;
   justify-content: flex-start; /* Изменено для группировки слева, с auto-push справа */
 }
+
 .logo-link {
   font-weight: 700;
   font-size: 1.75rem;
   color: gray;
 }
+
 .main-nav {
   margin-left: auto; /* Отталкивает nav и последующие элементы вправо */
 }
+
 .main-nav ul {
   list-style: none;
   display: flex;
@@ -49,11 +138,13 @@ a {
   padding: 0;
   align-items: auto;
 }
+
 .main-nav a {
   padding: 6px 4px;
   color: #4b5563;
   font-size: 1.13rem;
 }
+
 .dropdown {
   position: absolute;
   top: 30px;
@@ -64,31 +155,38 @@ a {
   min-width: 180px;
   display: none;
 }
+
 .has-dropdown:hover .dropdown {
   display: block;
 }
+
 .dropdown li {
   padding: 6px 14px;
 }
+
 .dropdown a:hover {
   text-decoration: underline;
 }
+
 .btn-contact {
   display: inline-block;
   padding: 8px 14px;
-  border: 2px ;
+  border: 2px;
   border-radius: 6px;
   background: gray;
   color: #fff;
 }
+
 .btn-contact:hover {
   background: #fff;
   color: #0b5ed7;
   border-color: #0b5ed7;
 }
+
 .hero {
   padding: 20px 0;
 }
+
 .slider {
   position: relative;
   background: #fff;
@@ -98,28 +196,32 @@ a {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
   margin: 10px auto;
 }
+
 .slides {
   display: flex;
   transition: transform 0.5s ease;
 }
+
 .slide {
-    position: relative; /* чтобы абсолютное позиционирование внутри работало */
-    min-width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    padding: 40px;
- 
+  position: relative; /* чтобы абсолютное позиционирование внутри работало */
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 40px;
 }
+
 .slide img {
   width: 40%;
   border-radius: 8px;
   object-fit: cover;
 }
+
 .slide-text h2 {
   margin: 0 0 10px 0;
   font-size: 1.5rem;
 }
+
 .slide-text p {
   font-size: 1.20rem;
   margin: 0;
@@ -127,15 +229,14 @@ a {
 }
 
 .quote-likes {
-    position: absolute;
-    bottom: 10px;
-    left: 15px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin: 10px auto 10px 27px;
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 10px auto 10px 27px;
 }
-
 
 .btn {
   position: absolute;
@@ -148,246 +249,202 @@ a {
   cursor: pointer;
   border-radius: 4px;
 }
+
 .slide {
-    position: relative;
-    padding-bottom: 60px; /* чтобы уголок не перекрывал текст */
+  position: relative;
+  padding-bottom: 60px; /* чтобы уголок не перекрывал текст */
 }
+
 .corner-label {
-    position: absolute;
-    bottom: 10px;
-    right: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    font-size: 14px;
-    color: #444444;
-    opacity: 0.9;
-    line-height: 1.2;
+  position: absolute;
+  bottom: 10px;
+  right: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 14px;
+  color: #444444;
+  opacity: 0.9;
+  line-height: 1.2;
 }
+
 .corner-title {
-    font-weight: 600;
+  font-weight: 600;
 }
+
 .corner-subtitle {
-    font-size: 18px;
-    opacity: 1;
+  font-size: 18px;
+  opacity: 1;
 }
 
-
-
-
-
-
-
-
-
+/* Авторы */
 .authors-title {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 25px;
-    color: #374151;
-    text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #374151;
+  text-align: center;
 }
 
 .authors-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .author-card {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    background: #fff;
-    border: 2px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-    gap: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: #fff;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  gap: 20px;
 }
 
 .author-left {
-    flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .author-avatar {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    object-fit: cover;      /* обрезает лишнее */
-    aspect-ratio: 1 / 1;    /* гарантирует квадрат */
-    border: 2px solid #e5e7eb;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  border: 2px solid #e5e7eb;
 }
 
 .author-center {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 .author-name {
-    margin: 0 0 6px 0;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #111827;
+  margin: 0 0 6px 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #111827;
 }
 
 .author-description {
-    margin: 0;
-    color: #6b7280;
-    font-size: 0.95rem;
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.95rem;
 }
 
 .author-right {
-    text-align: right;
-    min-width: 140px;
+  text-align: right;
+  min-width: 140px;
 }
-
 
 .author-likes {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #9ca3af;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #9ca3af;
 }
 
-
 .author-link {
-    font-size: 0.95rem;
-    color: gray;
+  font-size: 0.95rem;
+  color: gray;
 }
 
 .author-link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
-
-
-
-
-
-
+/* Форма цитаты */
 .quote-form-container {
-    max-width: 700px;
-    margin: 40px auto;
-    background: #fff;
-    border: 2px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 30px 40px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  max-width: 700px;
+  margin: 40px auto;
+  background: #fff;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 30px 40px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
 .quote-form-container h2 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 25px;
-    color: #111827;
-    text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #111827;
+  text-align: center;
 }
 
 .quote-form-container form p {
-    margin-bottom: 18px;
-    font-size: 1rem;
-    color: #374151;
+  margin-bottom: 18px;
+  font-size: 1rem;
+  color: #374151;
 }
 
 .quote-form-container label {
-    font-weight: 600;
-    margin-bottom: 6px;
-    display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
 }
 
 .quote-form-container input,
 .quote-form-container textarea,
 .quote-form-container select {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 1rem;
-    margin-top: 4px;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 4px;
+  box-sizing: border-box;
 }
 
 .quote-form-container textarea {
-    resize: vertical;
-    min-height: 100px;
+  resize: vertical;
+  min-height: 100px;
 }
 
 .quote-form-container button {
-    background: gray;
-    color: #fff;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 6px;
-    font-size: 1.05rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  background: gray;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .quote-form-container button:hover {
-    background: #d1d5db; /* светло-серый при наведении */
-    color: #4b5563;       /* текст станет темнее для контраста */
-    border: none;         /* убрали рамку */
-}
-
+  background: #d1d5db;
+  color: #4b5563;
+  border: none;
 }
 
 .form-error {
-    color: #dc2626;
-    font-weight: 600;
-    margin-bottom: 12px;
+  color: #dc2626;
+  font-weight: 600;
+  margin-bottom: 12px;
 }
-
 
 .quote-likes {
-    position: absolute;
-    bottom: 15px;
-    left: 20px;
-    display: flex;
-    gap: 12px;
-}
-
-.like-btn, .dislike-btn {
-    background: transparent;
-    border: 2px solid #94a3b8;
-    color: #64748b;
-    padding: 8px 16px;
-    border-radius: 50px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.like-btn.active, .dislike-btn.active {
-    background: #e2e8f0;
-    border-color: #cbd5e1;
-    color: #1e293b;
-}
-
-.like-btn:hover, .dislike-btn:hover {
-    border-color: #64748b;
-}
-
-
-.quote-likes {
-    display: flex;
-    gap: 10px;
-    margin-top: 0px;
-    margin-left: 0px;
-
+  display: flex;
+  gap: 10px;
+  margin-top: 0px;
+  margin-left: 0px;
 }
 
 .quote-likes button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .quote-likes img {
-    width: 24px;
-    height: 24px;
-    transition: 0.2s;
+  width: 24px;
+  height: 24px;
+  transition: 0.2s;
 }

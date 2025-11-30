@@ -7,6 +7,6 @@ urlpatterns = [
     path('authors', views.Authors.as_view(), name='authors'),
     path('AddQuote', views.AddQuote.as_view(), name='addQuote'),
     path('quote/<int:quote_id>/<str:action>/toggle/', views.toggle_vote_ajax, name='toggle_vote_ajax'),
-
+    path('cats/<slug:cat>/', views.categors, name='category'),
 
 ]
