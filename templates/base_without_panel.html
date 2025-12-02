@@ -34,32 +34,6 @@
 
 
   <div class="main-content-wrapper container">
-    <aside class="sidebar">
-      <div class="sort-buttons">
-          <h3>Фильтр</h3>
-          <ul>
-          <li><a href="?sort=new">Новые</a></li>
-          <li><a href="?sort=old">Старые</a></li>
-          <li><a href="?sort=likes">Популярные</a></li>
-          </ul>
-          <br>
-    </div>
-        {% if cat %}
-        <h3>Категории</h3>
-        <ul>
-            <li><a href="/">Все</a></li>
-        {% for x in cat %}
-            <li><a href="/cats/{{x.slug}}">{{x.name}}</a></li>
-
-        {% endfor %}
-        </ul>
-
-
-
-
-        {% endif %}
-    </aside>
-
     <main class="main-content">
       {% block content %} {% endblock %}
     </main>

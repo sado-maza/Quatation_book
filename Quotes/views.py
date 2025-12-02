@@ -53,12 +53,26 @@ class Authors(DataMixin, LoginRequiredMixin, ListView):
     context_object_name = "authors"
     title_page = "Авторы"
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+
+        sort = self.request.GET.get('sort')
+
+        if sort == 'new':
+            qs = qs.order_by('-date_joined')
+        elif sort == 'old':
+            qs = qs.order_by('date_joined')
+        elif sort == 'likes':
+            qs = qs.order_by('-sum_of_likes')
+
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         sumLike()
         context['default_img'] = settings.DEFAULT_USER_IMAGE
         return self.get_mixin_content(context)
+
 
 
 
