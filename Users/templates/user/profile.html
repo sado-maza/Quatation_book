@@ -1,20 +1,61 @@
 {% extends 'base_without_panel.html' %}
+{% load static %}
+
 {% block content %}
-<title>Профиль</title>
+<div class="login-wrapper">
+    <h1>Профиль</h1>
 
+    <form method="POST" enctype="multipart/form-data" class="login-form">
+        {% csrf_token %}
 
-<form method="POST" enctype="multipart/form-data" >
-    {% csrf_token %}
-    <div class="form-error">{{ form.non_field_errors }}</div>
-    {% for f in form%}
-        <p><label for="{{ f.id_for_label }}">{{f.label}}: </label>{{f}}</p>
-        <div>{{ f.errors }}</div>
-    {%endfor%}
-    <p><button type="submit">Сохранить</button></p>
+        {% if form.non_field_errors %}
+        <ul class="form-error">
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
 
-</form>
+        {# Поле аватара #}
+        {% if form.img %}
+        <div class="form-group profile-photo">
+            {% if user.img %}
+                <img src="{{ user.img.url }}" alt="Фото пользователя" class="avatar-preview">
+            {% else %}
+                <img src="{% static 'img/defolt.png' %}" alt="Фото пользователя" class="avatar-preview">
+            {% endif %}
+            {{ form.img }}
+            {% if form.img.errors %}
+            <ul class="field-errors">
+                {% for error in form.img.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% endif %}
 
-<hr>
-<p ><a href="{% url 'Users:password_change' %}">Сменить пароль</a></p>
+        {# Остальные поля формы #}
+        {% for f in form %}
+            {% if f.name != "img" %}
+            <div class="form-group">
+                <label for="{{ f.id_for_label }}">{{ f.label }}</label>
+                {{ f }}
+                {% if f.errors %}
+                <ul class="field-errors">
+                    {% for error in f.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% endif %}
+        {% endfor %}
 
+        <button type="submit" class="btn-submit">Сохранить</button>
+    </form>
+
+    <hr>
+    <p><a href="{% url 'Users:password_change' %}">Сменить пароль</a></p>
+</div>
 {% endblock %}

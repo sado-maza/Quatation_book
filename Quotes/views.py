@@ -19,7 +19,7 @@ class QuotesFeed(DataMixin, ListView):
     template_name = 'quotes/quotes.html'
     title_page = 'Цитаты'
     context_object_name = "quotes"
-    paginate_by = 3
+    paginate_by = 100
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -58,7 +58,7 @@ class Authors(DataMixin, ListView):
     template_name = 'quotes/authors.html'
     context_object_name = "authors"
     title_page = "Авторы"
-    paginate_by = 3
+    paginate_by = 50
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -74,6 +74,7 @@ class Authors(DataMixin, ListView):
         return qs
 
     def get_context_data(self, **kwargs):
+        sumLike()
         context = super().get_context_data(**kwargs)
         context["title_page"] = self.title_page
         return self.get_mixin_content(context)

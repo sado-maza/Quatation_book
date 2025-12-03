@@ -1,0 +1,4 @@
+{% if widget.is_initial %}
+    {# пусто, ничего не показываем вместо "Currently" #}
+{% endif %}
+<input type="{{ widget.type }}" name="{{ widget.name }}" {% include "django/forms/widgets/attrs.html" %}>

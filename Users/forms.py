@@ -33,14 +33,18 @@ class RegisterUserForm(UserCreationForm):
 
 
 class ProfileUserForm(forms.ModelForm):
-    username = forms.TextInput()
-    email = forms.CharField(disabled=True, label='E-mail', widget=forms.TextInput(attrs={'class': 'form-input'}))
-
     class Meta:
         model = get_user_model()
-        fields = ['username', 'email','img','description']
+        fields = ['img','username', 'email','description']
         labels = {
-            'username': "Логин"
+            'username': "Логин",
+        }
+        widgets = {
+            'image': forms.FileInput(attrs={
+                'accept': 'image/*',
+                # вот эта строчка убирает надпись полностью
+                'onchange': "this.nextElementSibling.textContent = this.files.length ? this.files[0].name : 'Выберите фото'"
+            }),
         }
 
 

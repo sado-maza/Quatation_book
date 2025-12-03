@@ -1,18 +1,40 @@
 {% extends 'base_without_panel.html' %}
+{% load static %}
+
 {% block content %}
 
-<h1>Авторизация</h1>
+<div class="login-wrapper">
+    <h1>Авторизация</h1>
 
-<form method="post" >
-    {% csrf_token %}
-    <input type="hidden" name="next" value="{{ next }}" />
-    <div class="form-error">{{ form.non_field_errors }}</div>
-    {% for f in form%}
-        <p><label for="{{ f.id_for_label }}">{{f.label}}: </label>{{f}}</p>
-        <div>{{ f.errors }}</div>
-    {%endfor%}
-    <p ><button type="submit">Войти</button></p>
-    <p ><a href="{% url 'Users:password_reset' %}">Забыли пароль?</a></p>
-</form>
+    {% if form.non_field_errors %}
+    <ul class="form-error">
+        {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form method="post" class="login-form">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" />
+
+        {% for f in form %}
+        <div class="form-group">
+            <label for="{{ f.id_for_label }}">{{ f.label }}</label>
+            {{ f }}
+            {% if f.errors %}
+            <ul class="field-errors">
+                {% for error in f.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="btn-submit">Войти</button>
+        <p class="forgot-password"><a href="{% url 'Users:password_reset' %}">Забыли пароль?</a></p>
+    </form>
+</div>
 
 {% endblock %}
