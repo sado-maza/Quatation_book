@@ -36,3 +36,16 @@
 </section>
 
 {% endblock %}
+
+{% block pagin %}
+<nav class="list-pages">
+    <ul>
+        {% for p in paginator.page_range %}
+            <li class="page-num {% if p == page_obj.number %}active{% endif %}">
+                <a href="?page={{ p }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}">{{ p }}</a>
+            </li>
+        {% endfor %}
+
+    </ul>
+</nav>
+{% endblock %}

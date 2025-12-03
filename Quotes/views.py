@@ -19,17 +19,7 @@ class QuotesFeed(DataMixin, ListView):
     template_name = 'quotes/quotes.html'
     title_page = 'Цитаты'
     context_object_name = "quotes"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        service = QuotesContextService(user=self.request.user)
-        # передаём extra_context через DataMixin
-        return self.get_mixin_content(
-            service.get_context(self.object_list, extra_context={
-                'title_page': self.title_page,
-
-            })
-        )
+    paginate_by = 3
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -47,15 +37,31 @@ class QuotesFeed(DataMixin, ListView):
             ).order_by('-like_count')
         return qs
 
-class Authors(DataMixin, LoginRequiredMixin, ListView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        page_qs = context["object_list"]
+
+        service = QuotesContextService(user=self.request.user)
+
+        # добавляем обработанные цитаты, но НЕ подменяем 'quotes'!
+        context["page_quotes"] = service.add_user_votes(page_qs)
+        context["cat"] = Category.objects.all()
+        context["title_page"] = self.title_page
+
+        return self.get_mixin_content(context)
+
+
+
+
+class Authors(DataMixin, ListView):
     model = get_user_model()
     template_name = 'quotes/authors.html'
     context_object_name = "authors"
     title_page = "Авторы"
+    paginate_by = 3
 
     def get_queryset(self):
         qs = super().get_queryset()
-
         sort = self.request.GET.get('sort')
 
         if sort == 'new':
@@ -69,11 +75,8 @@ class Authors(DataMixin, LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        sumLike()
-        context['default_img'] = settings.DEFAULT_USER_IMAGE
+        context["title_page"] = self.title_page
         return self.get_mixin_content(context)
-
-
 
 
 
