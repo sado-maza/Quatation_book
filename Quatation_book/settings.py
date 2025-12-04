@@ -144,3 +144,14 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_USER_IMAGE = MEDIA_URL + 'img/defolt_img.png'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'smtpfordjangoquotes@gmail.com'
+EMAIL_HOST_PASSWORD = 'cciz wbgx nqxf htgp'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
