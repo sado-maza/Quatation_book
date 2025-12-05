@@ -1,5 +1,4 @@
 from django.urls import path
-
 from Quotes import views
 
 urlpatterns = [

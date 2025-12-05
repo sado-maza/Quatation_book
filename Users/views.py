@@ -1,11 +1,9 @@
 from django.contrib.auth import  logout, get_user_model
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.shortcuts import redirect
 from django.urls.base import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
-
 from Quotes.utils import DataMixin
 from Users.forms import RegisterUserForm, ProfileUserForm, UserPasswordChangeForm, EmailAuthenticationForm
 
@@ -17,7 +15,6 @@ class LoginUser(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('feed')
-
 
 
 def logout_user(request):
@@ -43,7 +40,6 @@ class ProfileUser(DataMixin, LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
-
 
 
 class UserPasswordChange(DataMixin, PasswordChangeView):

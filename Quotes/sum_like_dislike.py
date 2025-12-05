@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model
 from .models import Like
 
-
 model = get_user_model()
 
 def countLike(username):

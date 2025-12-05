@@ -6,8 +6,6 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
-
-from Quatation_book import settings
 from .forms import AddQuoteForm
 from .sum_like_dislike import sumLike
 from .utils import DataMixin, QuotesContextService
@@ -51,8 +49,6 @@ class QuotesFeed(DataMixin, ListView):
         return self.get_mixin_content(context)
 
 
-
-
 class Authors(DataMixin, ListView):
     model = get_user_model()
     template_name = 'quotes/authors.html'
@@ -78,7 +74,6 @@ class Authors(DataMixin, ListView):
         context = super().get_context_data(**kwargs)
         context["title_page"] = self.title_page
         return self.get_mixin_content(context)
-
 
 
 class AddQuote(LoginRequiredMixin, DataMixin, CreateView):

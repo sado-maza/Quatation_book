@@ -1,9 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, AuthenticationForm
-from django.shortcuts import render
 
-import Users
 
 
 class EmailAuthenticationForm(AuthenticationForm):

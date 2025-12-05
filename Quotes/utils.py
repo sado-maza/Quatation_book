@@ -2,10 +2,7 @@ from Quotes.models import Category
 
 main = [
     {'title': 'Авторы', 'url_name': 'authors'},
-    {'title': 'Добавить Цитату', 'url_name': 'addQuote'},
-
-
-]
+    {'title': 'Добавить Цитату', 'url_name': 'addQuote'},]
 
 class DataMixin:
     title_page = None
@@ -15,8 +12,6 @@ class DataMixin:
         context.update(kwargs)
         context.setdefault('menu', main)
         return context
-
-
 
 
 class QuotesContextService:
